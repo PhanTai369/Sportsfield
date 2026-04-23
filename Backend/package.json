@@ -1,0 +1,63 @@
+{
+  "name": "football-field-booking-backend",
+  "version": "1.0.0",
+  "description": "Backend for football field booking platform",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "echo 'No build step required'",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:race": "jest test/race-condition-test.js",
+    "stripe:webhook": "docker run --rm -it stripe/stripe-cli listen --forward-to host.docker.internal:5001/api/payments/webhook",
+    "stripe:login": "docker run --rm -it stripe/stripe-cli login"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bcryptjs": "^2.4.3",
+    "@aws-sdk/client-s3": "^3.901.0",
+    "@aws-sdk/s3-request-presigner": "^3.901.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.0.3",
+    "exceljs": "^4.4.0",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "geolib": "^3.3.4",
+    "google-auth-library": "^9.0.0",
+    "ioredis": "^5.6.1",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
+    "node-cron": "^4.2.0",
+    "node-geocoder": "^4.4.1",
+    "nodemailer": "^7.0.3",
+    "pg": "^8.16.0",
+    "pg-hstore": "^2.3.4",
+    "sanitize-html": "^2.17.0",
+    "sequelize": "^6.37.7",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "stripe": "^18.1.1",
+    "uuid": "^11.1.0",
+    "validator": "^13.15.0",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^30.0.0",
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.3",
+    "supertest": "^7.1.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000,
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.js"
+    ]
+  }
+}

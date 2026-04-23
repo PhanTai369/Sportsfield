@@ -1,0 +1,279 @@
+/* Booking specific animations and styles */
+.booking-step-indicator {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.booking-step-active {
+  @apply transform scale-110 shadow-lg;
+}
+
+.booking-slot-item {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.booking-slot-item:hover {
+  @apply transform translate-y-[-2px] shadow-md;
+}
+
+.booking-slot-selected {
+  @apply transform scale-105 shadow-lg;
+}
+
+.booking-date-picker-item {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.booking-date-picker-item:hover {
+  @apply transform translate-y-[-2px] shadow-md;
+}
+
+.booking-date-picker-selected {
+  @apply transform scale-105 shadow-lg;
+}
+
+.booking-summary-card {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.booking-summary-card:hover {
+  @apply shadow-xl transform translate-y-[-4px];
+}
+
+.pulse-green {
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.slide-in-up {
+  animation: slide-in-up 0.5s ease-out;
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Loading spinner for booking */
+.booking-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #10b981;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Success animation */
+.success-checkmark {
+  animation: checkmark 0.6s ease-in-out;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Field selection highlight */
+.field-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.field-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.field-highlight:hover::before {
+  left: 100%;
+}
+
+/* Booking form improvements */
+.booking-form-section {
+  @apply bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-6;
+  transition: all 0.3s ease;
+}
+
+.booking-form-section:hover {
+  @apply shadow-md border-green-200;
+}
+
+/* Price display animation */
+.price-counter {
+  font-variant-numeric: tabular-nums;
+  transition: all 0.3s ease;
+}
+
+.price-highlight {
+  @apply text-green-600 font-bold;
+  animation: price-bounce 0.5s ease-in-out;
+}
+
+@keyframes price-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .booking-steps-container {
+    @apply px-2;
+  }
+  
+  .booking-steps-item {
+    @apply text-xs;
+  }
+  
+  .time-slot-grid {
+    @apply text-xs;
+  }
+  
+  .booking-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .booking-summary-card {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+  
+  .booking-date-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .booking-time-slots {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .booking-field-card {
+    padding: 0.75rem;
+  }
+  
+  .booking-step-indicator {
+    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+  
+  .booking-header {
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  
+  .booking-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .booking-continue-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-date-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .booking-field-selection {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .booking-price-display {
+    font-size: 1.25rem;
+  }
+  
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Tablet responsive */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .booking-grid {
+    grid-template-columns: 1fr 300px;
+    gap: 1.5rem;
+  }
+  
+  .booking-date-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .booking-time-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Enhanced hover states for desktop */
+@media (min-width: 1024px) {
+  .booking-field-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  .booking-slot-item:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .booking-date-picker-item:hover {
+    transform: translateY(-2px) scale(1.05);
+  }
+}

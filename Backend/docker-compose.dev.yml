@@ -1,0 +1,9 @@
+services:
+  stripe-cli:
+    image: stripe/stripe-cli
+    command: listen --forward-to host.docker.internal:5001/api/payments/webhook
+    environment:
+      - STRIPE_API_KEY=${STRIPE_SECRET_KEY}
+    restart: unless-stopped
+    profiles:
+      - webhook

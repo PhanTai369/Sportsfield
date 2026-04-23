@@ -1,0 +1,492 @@
+/* TimeSlot Management Styles */
+
+/* Grid layout improvements */
+.time-grid-container {
+  position: relative;
+}
+
+.time-slot-row {
+  min-height: 100px;
+  position: relative;
+  /* Move time slots down to center them between time markers */
+  margin-top: 50px;
+  /* Remove border-bottom to avoid conflict with cells */
+  padding-bottom: 10px;
+}
+
+.time-slot-row:first-child {
+  margin-top: 0;
+}
+
+/* Time label alignment */
+.time-label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  height: 100px;
+  /* Position time labels at the top of each row */
+  margin-top: -50px;
+  z-index: 30;
+}
+
+/* Time divider line - positioned to align with time labels */
+.time-slot-row .time-divider {
+  background: linear-gradient(to right, #e5e7eb, #d1d5db, #e5e7eb);
+  z-index: 10;
+  top: -50px !important;
+}
+
+/* Time marker dots - aligned with time labels */
+.time-marker {
+  position: absolute;
+  right: -6px;
+  top: -50px;
+  width: 10px;
+  height: 10px;
+  background: #6b7280;
+  border-radius: 50%;
+  z-index: 20;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Vertical time line */
+.vertical-time-line {
+  position: absolute;
+  right: 8px;
+  top: -50px;
+  bottom: 50px;
+  width: 1px;
+  background: linear-gradient(to bottom, #d1d5db, #9ca3af, #d1d5db);
+}
+
+/* Time slot cells - positioned to overlay divider lines */
+.time-slot-cell {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid transparent;
+  /* Center the time slot cells between time markers with better spacing */
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* Ensure cells overlay the divider lines */
+  z-index: 10;
+}
+
+.time-slot-available {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-color: #16a34a !important;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.15);
+  border-radius: 12px;
+}
+
+.time-slot-available:hover {
+  background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+  transform: translateY(-2px);
+}
+
+.time-slot-booked {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #2563eb !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+  border-radius: 12px;
+}
+
+.time-slot-booked:hover {
+  background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 100%);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  transform: translateY(-2px);
+}
+
+.time-slot-maintenance {
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+  border-color: #dc2626 !important;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+  border-radius: 12px;
+}
+
+.time-slot-maintenance:hover {
+  background: linear-gradient(135deg, #fca5a5 0%, #f87171 100%);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Drag preview */
+.drag-preview {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  border-color: #3b82f6 !important;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+/* Field headers */
+.field-header-a {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.field-header-b {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  color: #1e40af;
+  border: 1px solid #3b82f6;
+}
+
+.field-header-c {
+  background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+  color: #7c2d12;
+  border: 1px solid #8b5cf6;
+}
+
+.field-header-d {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  border: 1px solid #f59e0b;
+}
+
+.field-header-e {
+  background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+/* Field dots - Enhanced colors for better visibility */
+.field-dot-a {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
+  border: 1px solid #065f46;
+}
+
+.field-dot-b {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+  border: 1px solid #1e40af;
+}
+
+.field-dot-c {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  box-shadow: 0 1px 3px rgba(139, 92, 246, 0.3);
+  border: 1px solid #5b21b6;
+}
+
+.field-dot-d {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.3);
+  border: 1px solid #92400e;
+}
+
+.field-dot-e {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.3);
+  border: 1px solid #991b1b;
+}
+
+/* Enhanced time grid */
+.time-grid-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 80px;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 99px,
+      #f3f4f6 99px,
+      #f3f4f6 101px
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Add visual separator every 6 hours (quarter day) */
+.time-slot-row:nth-child(6n) .time-divider,
+.time-slot-row:nth-child(12n) .time-divider,
+.time-slot-row:nth-child(18n) .time-divider {
+  height: 2px;
+  background: #9ca3af;
+}
+
+.time-slot-row:nth-child(6n) .time-marker,
+.time-slot-row:nth-child(12n) .time-marker,
+.time-slot-row:nth-child(18n) .time-marker {
+  width: 12px;
+  height: 12px;
+  background: #374151;
+  border: 3px solid white;
+  right: -9px;
+}
+
+/* Tooltip container */
+.tooltip-container {
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 320px;
+  min-width: 280px;
+  z-index: 1000;
+  animation: tooltipFadeIn 0.15s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Context menu */
+.context-menu {
+  animation: contextMenuFadeIn 0.1s ease-out;
+}
+
+@keyframes contextMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Dragging state */
+.dragging {
+  cursor: grabbing !important;
+}
+
+.dragging * {
+  cursor: grabbing !important;
+}
+
+/* Animation for loading */
+.loading-skeleton {
+  animation: skeleton 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+/* Loading animation for time slots */
+.loading-time-slot {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-time-slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Status indicators */
+.status-indicator {
+  position: relative;
+}
+
+.status-indicator::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.status-available::before {
+  background: #10b981;
+}
+
+.status-booked::before {
+  background: #3b82f6;
+}
+
+.status-maintenance::before {
+  background: #ef4444;
+}
+
+/* Status indicator pulse animation */
+.status-indicator.pulse::before {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Enhanced keyboard shortcut styling */
+kbd {
+  display: inline-block;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #495057;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced hover effects for interactive elements */
+.interactive-hover {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Enhanced focus states */
+.time-slot-cell:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Enhanced sidebar field selection */
+.field-selection-item {
+  transition: all 0.3s ease;
+}
+
+.field-selection-item:hover {
+  transform: translateY(-1px);
+}
+
+.field-selection-item.selected {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Field dots animation */
+.field-dot-a,
+.field-dot-b,
+.field-dot-c,
+.field-dot-d,
+.field-dot-e {
+  transition: all 0.2s ease;
+}
+
+.field-dot-a:hover,
+.field-dot-b:hover,
+.field-dot-c:hover,
+.field-dot-d:hover,
+.field-dot-e:hover {
+  transform: scale(1.1);
+}
+
+/* Statistics badges in sidebar */
+.stats-badge {
+  font-size: 10px;
+  min-width: 20px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.stats-badge:hover {
+  transform: scale(1.05);
+}
+
+/* Status badge styles */
+.time-slot-cell .status-badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Time range styling */
+.time-slot-cell .time-range {
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: 0.02em;
+}
+
+/* Price styling */
+.time-slot-cell .price {
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: 0.02em;
+}
+
+/* Enhanced cell transitions */
+.time-slot-cell {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.time-slot-cell:hover {
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .time-grid-container {
+    overflow-x: auto;
+    min-width: 800px;
+  }
+  
+  .tooltip-container {
+    max-width: 280px;
+    min-width: 240px;
+  }
+  
+  .time-slot-row {
+    min-height: 85px;
+    margin-top: 42px;
+  }
+  
+  .time-label {
+    height: 85px;
+    margin-top: -42px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .tooltip-container,
+  .context-menu,
+  .dragging {
+    display: none !important;
+  }
+  
+  .time-slot-cell {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,179 @@
+/* Enhanced Button Styles for TimeSlot Management */
+
+/* Primary Button Enhancements */
+.btn-primary-enhanced {
+  background: linear-gradient(135deg, #1967D2 0%, #1557B0 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(25, 103, 210, 0.15);
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary-enhanced:hover {
+  background: linear-gradient(135deg, #1557B0 0%, #1446A0 100%);
+  box-shadow: 0 4px 12px rgba(25, 103, 210, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-primary-enhanced:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(25, 103, 210, 0.15);
+}
+
+/* Secondary Button Enhancements */
+.btn-secondary-enhanced {
+  background: white;
+  border: 2px solid #5F6368;
+  color: #5F6368;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary-enhanced:hover {
+  background: #5F6368;
+  color: white;
+  border-color: #5F6368;
+  box-shadow: 0 2px 8px rgba(95, 99, 104, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Success Button (Auto Generate) */
+.btn-success-enhanced {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-success-enhanced:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Statistics Card Hover Effects */
+.stats-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.stats-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card-green:hover {
+  box-shadow: 0 12px 32px rgba(34, 197, 94, 0.15);
+}
+
+.stats-card-blue:hover {
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+}
+
+.stats-card-red:hover {
+  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.15);
+}
+
+/* Context Menu Animations */
+.context-menu-enhanced {
+  animation: contextMenuSlideIn 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes contextMenuSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Button Focus States */
+.btn-enhanced:focus {
+  outline: 2px solid #1967D2;
+  outline-offset: 2px;
+}
+
+.btn-enhanced:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Navigation Button Improvements */
+.nav-btn {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Tooltip Enhancements */
+.tooltip-enhanced {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading State Animations */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Button Adjustments */
+@media (max-width: 768px) {
+  .btn-enhanced {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .stats-card {
+    padding: 1rem;
+  }
+  
+  .context-menu-enhanced {
+    min-width: 140px;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .btn-primary-enhanced {
+    background: #000;
+    border: 2px solid #000;
+  }
+  
+  .btn-secondary-enhanced {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .btn-enhanced,
+  .stats-card,
+  .context-menu-enhanced {
+    transition: none;
+    animation: none;
+  }
+  
+  .stats-card:hover {
+    transform: none;
+  }
+}
