@@ -15,6 +15,7 @@ const secureImageRoutes = require('./secureImage.routes');
 const notificationRoutes = require('./notification.routes');
 const revenueRoutes = require('./revenue.routes');
 const promotionRoutes = require('./promotion.routes');
+const chatbotRoutes = require('./chatbotRoutes');
 
 const adminRoutes = require('./admin.routes');
 
@@ -66,5 +67,8 @@ router.use('/secure-images', secureImageRoutes);
 router.use('/revenue', revenueRoutes);
 // Mount promotion routes
 router.use('/promotions', promotionRoutes);
+
+// Mount chatbot routes
+router.use('/chatbot', chatbotRoutes);
 
 module.exports = router;

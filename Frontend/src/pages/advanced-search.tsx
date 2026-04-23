@@ -595,7 +595,7 @@ const AdvancedSearchPage = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <div className="bg-green-600 text-white py-16">
+      <div className="bg-green-600 text-black py-16">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold mb-4">Tìm kiếm nâng cao</h1>
           <p className="text-xl">
@@ -670,7 +670,7 @@ const AdvancedSearchPage = () => {
                   </select>
                 </div>
                 <Button
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg"
+                  className="bg-green-600 hover:bg-green-700 text-black px-8 py-6 text-lg"
                   onClick={handleSearchByName}
                   disabled={loading}
                 >
@@ -707,7 +707,7 @@ const AdvancedSearchPage = () => {
                   )}
                 </div>
                 <Button
-                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg"
+                  className="bg-green-600 hover:bg-green-700 text-black px-8 py-6 text-lg"
                   onClick={handleGeocode}
                   disabled={loading || isGettingLocation}
                 >
@@ -722,7 +722,7 @@ const AdvancedSearchPage = () => {
                 <div className="flex flex-col sm:flex-row gap-3">
                 <Button 
                   variant={useCurrentLocation ? "default" : "outline"}
-                  className={`flex items-center justify-center ${useCurrentLocation ? "bg-green-600 hover:bg-green-700 text-white" : ""}`}
+                  className={`flex items-center justify-center ${useCurrentLocation ? "bg-green-600 hover:bg-green-700 text-black" : ""}`}
                   disabled={isGettingLocation}
                   onClick={getCurrentLocation}
                 >
@@ -895,7 +895,7 @@ const AdvancedSearchPage = () => {
                       onClick={() => setMinRating(rating)}
                       className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         minRating >= rating 
-                          ? 'bg-yellow-400 text-white' 
+                          ? 'bg-yellow-400 text-black' 
                           : 'bg-gray-100 text-gray-400'
                       }`}
                     >
@@ -1053,7 +1053,7 @@ const AdvancedSearchPage = () => {
                         </Button>
                         <Button
                           size="sm"
-                          className="bg-green-600 hover:bg-green-700 text-white px-4 rounded-md"
+                          className="bg-green-600 hover:bg-green-700 text-black px-4 rounded-md"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleBooking(field.id);

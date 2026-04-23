@@ -13,10 +13,11 @@
     "stripe:login": "docker run --rm -it stripe/stripe-cli login"
   },
   "dependencies": {
-    "axios": "^1.9.0",
-    "bcryptjs": "^2.4.3",
+    "@aws-sdk/client-bedrock-agent-runtime": "^3.1035.0",
     "@aws-sdk/client-s3": "^3.901.0",
     "@aws-sdk/s3-request-presigner": "^3.901.0",
+    "axios": "^1.9.0",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "dotenv": "^16.0.3",

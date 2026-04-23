@@ -46,6 +46,7 @@ import AdvancedSearchPage from "./pages/advanced-search";
 import { Dashboard } from "./pages/admin";
 import PackageServiceDetails from "./pages/admin/PackageServiceDetails";
 import FieldBookingRevenueDetails from "./pages/admin/FieldBookingRevenueDetails";
+import Chatbot from "./components/chat/Chatbot";
 
 const App: React.FC = () => {
   return (
@@ -240,6 +241,7 @@ const App: React.FC = () => {
               <Route path="settings" element={<div>Settings Coming Soon</div>} />
             </Route>
           </Routes>
+          <Chatbot />
         </Suspense>
       </SettingsProvider>
     </ErrorBoundary>

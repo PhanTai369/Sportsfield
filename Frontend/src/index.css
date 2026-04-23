@@ -621,3 +621,19 @@ html {
 .time-grid-container * {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Ép tất cả các ô nhập liệu thành chữ đen nền trắng */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
