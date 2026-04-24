@@ -1,4 +1,5 @@
 const { BedrockRuntimeClient, ConverseCommand } = require("@aws-sdk/client-bedrock-runtime");
+const { BedrockAgentRuntimeClient, RetrieveCommand } = require("@aws-sdk/client-bedrock-agent-runtime");
 const { Field, Location } = require('../models');
 const { Op } = require('sequelize');
 const responseFormatter = require('../utils/responseFormatter');
@@ -8,11 +9,12 @@ const logger = require('../utils/logger');
 // In a real production app, this should be in Redis or DB
 const sessionMap = new Map();
 
-// Initialize Bedrock Client
+// Initialize Bedrock Clients
 const client = new BedrockRuntimeClient({ region: process.env.AWS_REGION || "us-west-2" });
+const agentClient = new BedrockAgentRuntimeClient({ region: process.env.AWS_REGION || "us-west-2" });
 
 /**
- * Tool: Search Football Fields in Database
+ * Tool 1: Search Football Fields in Database
  */
 const searchFootballFields = async (args) => {
   try {
@@ -56,6 +58,38 @@ const searchFootballFields = async (args) => {
 };
 
 /**
+ * Tool 2: Search Regulations in S3 Knowledge Base
+ */
+const searchRegulations = async (query) => {
+  try {
+    const kbId = process.env.BEDROCK_KNOWLEDGE_BASE_ID;
+    if (!kbId) {
+      return "Hệ thống chưa được cấu hình BEDROCK_KNOWLEDGE_BASE_ID để đọc file nội quy.";
+    }
+
+    const command = new RetrieveCommand({
+      knowledgeBaseId: kbId,
+      retrievalQuery: { text: query },
+      retrievalConfiguration: {
+        vectorSearchConfiguration: { numberOfResults: 3 }
+      }
+    });
+
+    const response = await agentClient.send(command);
+    
+    if (!response.retrievalResults || response.retrievalResults.length === 0) {
+      return "Không tìm thấy thông tin nào liên quan trong sổ tay quy định.";
+    }
+
+    const resultText = response.retrievalResults.map(r => r.content.text).join('\n\n');
+    return `Đây là thông tin trích xuất từ file Quy định (Knowledge Base):\n${resultText}`;
+  } catch (error) {
+    logger.error('Knowledge Base retrieval error:', error);
+    return "Đã xảy ra lỗi khi tra cứu sổ tay quy định.";
+  }
+};
+
+/**
  * Handle incoming chatbot questions
  * POST /api/chatbot/ask
  */
@@ -74,11 +108,11 @@ const askChatbot = async (req, res) => {
       sessionMap.set(sessionId, [
         {
           role: "user",
-          content: [{ text: "Hãy đóng vai một nhân viên tư vấn siêu nhiệt tình của hệ thống đặt sân bóng SportFields. Khách hàng sẽ hỏi bạn thông tin về sân. Bạn MẶC ĐỊNH SẼ SỬ DỤNG CÔNG CỤ 'search_football_fields' để lấy thông tin ĐỘNG TỪ DATABASE để trả lời khách. Không được tự bịa ra dữ liệu." }]
+          content: [{ text: "Hãy đóng vai một nhân viên tư vấn siêu nhiệt tình của hệ thống đặt sân bóng SportFields. Bạn có 2 công cụ: 'search_football_fields' (để tra cứu giá và thông tin sân thực tế từ Database) và 'search_regulations' (để tra cứu chính sách, nội quy từ file). Tùy vào câu hỏi của khách mà hãy sử dụng đúng công cụ. Không được tự bịa ra dữ liệu." }]
         },
         {
           role: "assistant",
-          content: [{ text: "Dạ em chào anh/chị ạ! Em là nhân viên tư vấn của hệ thống SportFields. Em có thể giúp anh/chị tìm sân bóng ở khu vực nào hoặc mức giá bao nhiêu ạ?" }]
+          content: [{ text: "Dạ em chào anh/chị ạ! Em là nhân viên tư vấn của hệ thống SportFields. Em có thể giúp anh/chị tìm sân bóng ở khu vực nào, hoặc anh/chị có thắc mắc gì về quy định của bên em không ạ?" }]
         }
       ]);
     }
@@ -87,23 +121,40 @@ const askChatbot = async (req, res) => {
     // Add user's new question
     messages.push({ role: "user", content: [{ text: question }] });
 
-    // Define the tool for Bedrock
+    // Define tools for Bedrock
     const toolConfig = {
-      tools: [{
-        toolSpec: {
-          name: "search_football_fields",
-          description: "Tra cứu thông tin sân bóng TRỰC TIẾP TỪ DATABASE hệ thống SportFields dựa trên địa điểm hoặc giá.",
-          inputSchema: {
-            json: {
-              type: "object",
-              properties: {
-                location_query: { type: "string", description: "Tên quận, thành phố hoặc đường (ví dụ: Thủ Đức, Quận 1)." },
-                max_price: { type: "number", description: "Mức giá tối đa mà khách hàng mong muốn (VND)." }
+      tools: [
+        {
+          toolSpec: {
+            name: "search_football_fields",
+            description: "Tra cứu thông tin sân bóng TRỰC TIẾP TỪ DATABASE hệ thống SportFields dựa trên địa điểm hoặc giá.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  location_query: { type: "string", description: "Tên quận, thành phố hoặc đường (ví dụ: Thủ Đức, Quận 1)." },
+                  max_price: { type: "number", description: "Mức giá tối đa mà khách hàng mong muốn (VND)." }
+                }
+              }
+            }
+          }
+        },
+        {
+          toolSpec: {
+            name: "search_regulations",
+            description: "Tra cứu các chính sách, nội quy, quy định, hướng dẫn thanh toán hoặc thông tin chung từ file tài liệu của hệ thống.",
+            inputSchema: {
+              json: {
+                type: "object",
+                properties: {
+                  search_query: { type: "string", description: "Câu hỏi hoặc từ khóa cần tìm trong sổ tay quy định (ví dụ: chính sách hoàn tiền, quy định mang giày)." }
+                },
+                required: ["search_query"]
               }
             }
           }
         }
-      }]
+      ]
     };
 
     const modelId = process.env.BEDROCK_MODEL_ARN || "anthropic.claude-3-haiku-20240307-v1:0";
@@ -117,7 +168,7 @@ const askChatbot = async (req, res) => {
     let response = await client.send(command);
     let outputMessage = response.output.message;
     
-    // Handle Tool Use (If AI decides it needs to query the database)
+    // Handle Tool Use
     if (response.stopReason === "tool_use") {
       const toolUseBlock = outputMessage.content.find(c => c.toolUse);
       if (toolUseBlock) {
@@ -126,15 +177,17 @@ const askChatbot = async (req, res) => {
         // Add AI's tool request to history
         messages.push(outputMessage); 
         
-        // Execute the actual Database function
+        // Execute the actual function based on tool name
         let toolResultText = "";
         if (name === "search_football_fields") {
           toolResultText = await searchFootballFields(input);
+        } else if (name === "search_regulations") {
+          toolResultText = await searchRegulations(input.search_query);
         } else {
           toolResultText = "Công cụ không tồn tại.";
         }
 
-        // Send DB result back to AI
+        // Send result back to AI
         messages.push({
           role: "user",
           content: [{
